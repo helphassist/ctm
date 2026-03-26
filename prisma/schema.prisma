@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TaskStatus {
+  AGENDADO
+  ENVIADO
+  ERRO
+}
+
+model Task {
+  id                    String     @id @default(cuid())
+  title                 String
+  message               String
+  eventDatetime         DateTime   @map("event_datetime")
+  notifyBeforeMinutes   Int        @map("notify_before_minutes")
+  sendDatetime          DateTime   @map("send_datetime")
+  status                TaskStatus @default(AGENDADO)
+  createdAt             DateTime   @default(now()) @map("created_at")
+  updatedAt             DateTime   @updatedAt @map("updated_at")
+  sentAt                DateTime?  @map("sent_at")
+  errorMessage          String?    @db.Text @map("error_message")
+
+  @@map("tasks")
+}
