@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: ctm-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ctm
+      POSTGRES_USER: ctm_user
+      POSTGRES_PASSWORD: ctm_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - ctm_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  ctm_postgres_data:
